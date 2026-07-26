@@ -2,12 +2,12 @@
 project: "10xCards"
 context_type: greenfield
 created: 2026-07-19
-updated: 2026-07-19
+updated: 2026-07-26
 product_type: web-app
 target_scale:
   users: small
-  qps: low
-  data_volume: small
+  qps: "up to 5-10 peak, average 0.1"
+  data_volume: "up to 500 cards/user, <100MB total"
 timeline_budget:
   mvp_weeks: 3
   hard_deadline: "2026-08-20"
@@ -131,6 +131,71 @@ The MVP uses a standard, secure multi-user model with a flat permission structur
 - User can edit the text of any draft card before accepting.
 - Empty or very short input text displays a validation error instead of calling the AI.
 
+### US-02: User Registration and Login
+
+- **Given** an unauthenticated visitor on the landing page
+- **When** they fill out the registration form with a valid email and strong password
+- **Then** their account is created, they are logged in automatically, and redirected to their dashboard
+
+- **Given** a registered user on the login page
+- **When** they submit their correct email and password
+- **Then** they are logged in and redirected to their dashboard
+
+#### Acceptance Criteria
+- Sign-up validates email format and enforces basic password strength (minimum 8 characters).
+- Form displays clear error feedback for incorrect login credentials or pre-existing email registrations.
+- Gated routes (such as dashboards, deck details, and review screens) redirect back to the landing page if accessed by unauthenticated visitors.
+
+### US-03: Deck Creation and Management
+
+- **Given** a logged-in user on their dashboard
+- **When** they click "Create New Deck" and enter a name
+- **Then** a new deck is created and they see it in their deck list
+
+- **Given** a logged-in user on their dashboard
+- **When** they click "Delete Deck" on a specific deck and confirm the prompt
+- **Then** the deck and all its associated cards are deleted permanently
+
+#### Acceptance Criteria
+- The dashboard lists all decks owned by the active user in a clean, flat list.
+- Users must confirm deck deletion via a confirmation modal/dialog before the action is executed.
+- The deck list displays card counts (total cards and cards due for review) for each deck.
+
+### US-04: Manual Flashcard Creation and Management
+
+- **Given** a logged-in user viewing a specific deck
+- **When** they fill out the "New Card" form with front/back text and click save
+- **Then** the new card is saved inside that deck and the list of cards updates
+
+- **Given** a logged-in user viewing a specific card inside their deck
+- **When** they edit the front/back text and save changes, or click delete
+- **Then** the card's content is updated instantly, or the card is permanently deleted
+
+#### Acceptance Criteria
+- Empty front or back fields display a clear validation error and prevent card creation.
+- Editing a card updates its text without modifying its current spaced-repetition scheduling parameters (repetition count, ease factor, review interval).
+- Deleting a card removes it permanently from the database and active study queue.
+
+### US-05: Spaced Repetition Study Session
+
+- **Given** a logged-in user with a deck containing cards due for review
+- **When** they start a study session
+- **Then** they see the first due card's front side, with the back side and rating buttons hidden
+
+- **Given** a user viewing the front of a due card
+- **When** they click "Show Answer"
+- **Then** they see the back of the card along with three recall rating buttons: "Easy", "Good", and "Hard"
+
+- **Given** a user viewing both front and back of a card
+- **When** they select their recall rating (Easy, Good, or Hard)
+- **Then** the card's next review date is recalculated and the session immediately displays the next due card
+
+#### Acceptance Criteria
+- The study session displays only cards whose next-review timestamp is in the past (due for review).
+- If zero cards are due, the deck page shows an encouraging "All caught up!" state and disables the "Start Review" button.
+- Card-to-card transitions are fast (<100ms) with intuitive visual/interactive feedback.
+- Completing all due cards in the session returns the user to the deck summary view.
+
 ## Business Logic
 
 The application automatically extracts atomic, study-ready active recall questions from unstructured text and schedules their reviews using an adaptive spaced repetition calculation to guarantee optimal retention with minimal card creation effort.
@@ -166,3 +231,4 @@ The system calculates the exact next-review date for cards using an adaptive cal
 - **No Deck Sharing or Social Features**: All user data, decks, and review states are strictly private; collaborative decks, shared public repos, and social links are out of scope.
 - **No Proprietary Algorithm Research**: We will not design or optimize a custom spaced-repetition algorithm from scratch; standard box-based Leitner or the classic SM-2 algorithm will be leveraged directly.
 - **No Third-Party Platform Sync**: We will not build automatic integrations or live syncing with existing apps (like Notion, Quizlet, RemNote, or Obsidian).
+
