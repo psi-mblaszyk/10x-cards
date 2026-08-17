@@ -1,0 +1,51 @@
+# Converted from Claude Code permission policy
+# Matches 'Read', 'Edit', 'Write', allowed bash commands, asked bash commands, and denied bash commands.
+
+# 1. File Access Permissions (Claude 'Read', 'Edit', 'Write')
+[[rule]]
+toolName = ["read_file", "list_directory", "glob", "grep_search"]
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = ["write_file", "replace"]
+decision = "allow"
+priority = 100
+
+# 2. Allowed Shell Commands (Claude 'Bash(...)')
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = [
+  "npm",
+  "npx",
+  "node",
+  "git add",
+  "git commit",
+  "git diff",
+  "git log",
+  "git status",
+  "git branch",
+  "git checkout",
+  "git stash"
+]
+decision = "allow"
+priority = 100
+
+# 3. Prompt-upon-execution Shell Commands (Claude 'Bash(...)')
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = [
+  "curl",
+  "wget",
+  "git push"
+]
+decision = "ask_user"
+priority = 100
+
+# 4. Denied Shell Commands (Claude 'Bash(...)')
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "rm -rf"
+decision = "deny"
+priority = 100
+denyMessage = "Executing 'rm -rf' is strictly prohibited by security policy."
