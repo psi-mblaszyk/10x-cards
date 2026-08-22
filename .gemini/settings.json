@@ -1,5 +1,3 @@
 {
-  "policyPaths": [
-    "./.gemini/policies/project-rules.toml"
-  ]
+  "policyPaths": ["./.gemini/policies/project-rules.toml"]
 }
