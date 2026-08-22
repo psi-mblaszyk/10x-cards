@@ -52,7 +52,7 @@ The **10x Astro Starter** is a modern, opinionated starter template designed for
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) (integrated via `@tailwindcss/vite`).
 - **Type Safety**: [TypeScript v5](https://www.typescriptlang.org/) (strict mode configured via `astro/tsconfigs/strict`).
 - **Backend & Authentication**: [Supabase](https://supabase.com/) (using `@supabase/ssr` for cookie-based session management).
-- **Deployment & Runtime**: [Cloudflare Workers](https://workers.cloudflare.com/) (configured via `wrangler.jsonc` with the `@astrojs/cloudflare` adapter).
+- **Deployment & Runtime**: [Vercel](https://vercel.com/) (using the serverless and edge-native runtime via the `@astrojs/vercel` adapter).
 
 ### Architecture & Folder Structure
 
@@ -79,8 +79,7 @@ _(See also `@README.md` for layout mappings)_
 │ └── middleware.ts # Edge middleware checking session state per request
 ├── supabase/ # Local Supabase configurations & SQL migrations
 ├── astro.config.mjs # Astro configuration (integrations, adapter, schema)
-├── tsconfig.json # TypeScript options and path mappings
-└── wrangler.jsonc # Cloudflare wrangler configuration
+└── tsconfig.json # TypeScript options and path mappings
 ```
 
 ---
@@ -92,20 +91,20 @@ Ensure you have **Node.js v22.14.0** installed. Local database operations requir
 ### Core CLI Scripts
 
 Refer directly to `@package.json` scripts for all available commands. The most common commands are:
-*   `npm run dev` — Start the local development server (Cloudflare workerd runtime).
-*   `npm run build` — Compile the production build.
-*   `npm run lint` — Run ESLint across the codebase.
-*   `npm run format` — Run Prettier formatting.
+
+- `npm run dev` — Start the local development server.
+- `npm run build` — Compile the production build.
+- `npm run lint` — Run ESLint across the codebase.
+- `npm run format` — Run Prettier formatting.
 
 ### Database & Environment Setup
 
 1. **Credentials Setup**:
    - Local Node/Supabase: copy `.env.example` to `.env`.
-   - Cloudflare Local Dev: copy `.env.example` to `.dev.vars` (this is gitignored and loaded by wrangler).
 2. **Local Supabase Start**:
    - Initialize Supabase project (if not already initialized): `npx supabase init`
    - Spin up Docker-based Supabase stack: `npx supabase start`
-   - Copy the printed endpoint/key credentials directly into both `.env` and `.dev.vars`.
+   - Copy the printed endpoint/key credentials directly into `.env`.
 
 <!-- BEGIN @przeprogramowani/10x-cli -->
 

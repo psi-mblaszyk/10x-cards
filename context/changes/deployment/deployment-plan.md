@@ -23,6 +23,7 @@ Before starting the deployment process, ensure the following tools are installed
 ## Implementation Steps
 
 ### 1. Codebase Modifications (Automated)
+
 - [x] **Uninstall Cloudflare**: Remove `@astrojs/cloudflare` and `wrangler` from `package.json`.
 - [x] **Delete Cloudflare Configs**: Remove `wrangler.jsonc` and the `.wrangler` directory.
 - [x] **Install Vercel Adapter**: Add `@astrojs/vercel` to `package.json` dependencies.
@@ -30,16 +31,19 @@ Before starting the deployment process, ensure the following tools are installed
 - [x] **Update Ignore Files**: Add `.vercel/` to `.gitignore`.
 
 ### 2. Manual Setup Gates (Human Actions)
+
 Before the automated CI/CD can connect to your database, you must obtain and configure the correct connection secrets:
-- [x] **Obtain Supabase API URL**: 
+
+- [x] **Obtain Supabase API URL**:
   - Go to your Supabase Project Dashboard -> Project Settings -> API.
   - Copy the **Project URL** (under "Project API keys", it should look like `https://xxxxxx.supabase.co`).
-  - **Note**: Do *not* use the PostgreSQL connection string (`postgres://...`) for `SUPABASE_URL`, as the Supabase JS/Astro SDK communicates via HTTPS API endpoints.
+  - **Note**: Do _not_ use the PostgreSQL connection string (`postgres://...`) for `SUPABASE_URL`, as the Supabase JS/Astro SDK communicates via HTTPS API endpoints.
 - [x] **Obtain Supabase Anon Key**:
   - Go to Project Settings -> API.
   - Copy the `anon` `public` key.
 
 ### 3. CLI & Deployment (Automated & Interactive)
+
 - [x] **Use Vercel CLI via npx**: (No global installation required).
 - [x] **Login**: Run `npx vercel login` (interactive prompt for the user).
 - [x] **Link & Deploy**: Run `npx vercel` to link the local project to a Vercel project and set up the GitHub repository connection for future auto-deployments on push to `master`.
@@ -52,6 +56,7 @@ Before the automated CI/CD can connect to your database, you must obtain and con
 - [ ] **Vite Rollup Hash Bug**: If the Astro build fails with hash placeholder errors during deployment (common with complex React islands), we will pin the `astro` dependency to version `6.1.2` as documented in the infrastructure risks.
 
 ## Verification & Testing
+
 - [x] Visit the generated Vercel production URL.
 - [x] Ensure the Astro SSR pages load quickly (no 504 errors).
 - [x] Confirm that pushing a test commit to the `master` branch automatically triggers a build in the Vercel dashboard.
