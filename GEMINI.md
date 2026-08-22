@@ -6,7 +6,7 @@ This file serves as the definitive reference and context for any AI Agent workin
 
 ## 1. Development Conventions
 
-To maintain a cohesive and robust codebase, all agents must rigorously adhere to the following architectural guidelines and styling rules.
+To maintain a cohesive and robust codebase, all agents must rigorously adhere to the active coding guidelines and constraints defined in `@AGENTS.md` at the repo root.
 
 ### Rendering Rules
 
@@ -91,16 +91,11 @@ Ensure you have **Node.js v22.14.0** installed. Local database operations requir
 
 ### Core CLI Scripts
 
-_(See also `@package.json` and `@CLAUDE.md` for direct script configurations)_
-
-| Command            | Action                                                                          |
-| :----------------- | :------------------------------------------------------------------------------ |
-| `npm run dev`      | Starts the Astro development server in local Cloudflare `workerd` runtime.      |
-| `npm run build`    | Compiles the production build (SSR compiled for `@astrojs/cloudflare`).         |
-| `npm run preview`  | Previews the built production assets locally.                                   |
-| `npm run lint`     | Runs ESLint across the codebase using type-checked rules.                       |
-| `npm run lint:fix` | Runs ESLint and auto-fixes any repairable style/lint violations.                |
-| `npm run format`   | Runs Prettier to enforce consistent formatting across all supported file types. |
+Refer directly to `@package.json` scripts for all available commands. The most common commands are:
+*   `npm run dev` — Start the local development server (Cloudflare workerd runtime).
+*   `npm run build` — Compile the production build.
+*   `npm run lint` — Run ESLint across the codebase.
+*   `npm run format` — Run Prettier formatting.
 
 ### Database & Environment Setup
 
